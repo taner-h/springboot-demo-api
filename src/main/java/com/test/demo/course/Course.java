@@ -1,6 +1,7 @@
 package com.test.demo.course;
 
 import com.test.demo.student.Student;
+import com.test.demo.teacher.Teacher;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,7 +15,6 @@ public class Course {
     private Integer id;
     private String title;
     private String code;
-    private String instructor;
     private Integer credit;
 
     @ManyToMany
@@ -23,13 +23,19 @@ public class Course {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Student> students;
+    @ManyToMany
+    @JoinTable(
+            name = "CourseTeacher",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Teacher> teachers;
 
-    public Course(String title, String code, String instructor, Integer credit) {
+    public Course(String title, String code, Integer credit) {
         this.title = title;
         this.code = code;
-        this.instructor = instructor;
         this.credit = credit;
         this.students = new HashSet<>();
+        this.teachers = new HashSet<>();
     }
 
     public Course() {
@@ -59,14 +65,6 @@ public class Course {
         this.code = code;
     }
 
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
-
     public Integer getCredit() {
         return credit;
     }
@@ -75,22 +73,20 @@ public class Course {
         this.credit = credit;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", code='" + code + '\'' +
-                ", instructor='" + instructor + '\'' +
-                ", credit=" + credit +
-                '}';
-    }
 
     public Set<Student> getStudents() {
         return students;
     }
 
+    public Set<Teacher> getTeachers() {
+        return teachers;
+    }
+
     public void enrollStudent(Student student) {
         students.add(student);
+    }
+
+    public void assignTeacher(Teacher teacher) {
+        teachers.add(teacher);
     }
 }

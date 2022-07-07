@@ -2,6 +2,8 @@ package com.test.demo.course;
 
 import com.test.demo.student.Student;
 import com.test.demo.student.StudentRepository;
+import com.test.demo.teacher.Teacher;
+import com.test.demo.teacher.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class CourseService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Autowired
     public CourseService(CourseRepository courseRepository) {
@@ -59,6 +64,14 @@ public class CourseService {
         }
 
 
+    public void assignTeacherToCourse(Integer courseId, Integer teacherId) {
+        Course course = courseRepository.findCourseById(courseId)
+                .orElseThrow(() -> new IllegalStateException("no course found with given id (" + courseId + ")"));
+        Teacher teacher = teacherRepository.findTeacherById(teacherId)
+                .orElseThrow(() -> new IllegalStateException("no teacher found with given id (" + teacherId + ")"));
+        course.assignTeacher(teacher);
+        courseRepository.save(course);
 
+    }
 }
 

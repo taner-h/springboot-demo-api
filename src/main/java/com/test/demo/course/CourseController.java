@@ -40,7 +40,12 @@ public class CourseController {
     @PutMapping("/{courseId}/student/{studentId}")
     public void enrollStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
         courseService.enrollStudentToCourse(courseId, studentId);
+
     }
 
+    @PutMapping("/{courseId}/teacher/{teacherId}")
+    public void assignTeacherToCourse(@PathVariable Integer courseId, @PathVariable Integer teacherId) {
+        courseService.assignTeacherToCourse(courseId, teacherId);
+    }
 
 }
