@@ -9,4 +9,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 
     Optional<Teacher> findTeacherById(Integer id);
 
+
+
 }

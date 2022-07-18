@@ -1,6 +1,7 @@
 package com.test.demo.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class CourseController {
     }
 
     @PostMapping
-    public void addNewCourse(@RequestBody Course course) {
-        courseService.addNewCourse(course);
+    public Course addNewCourse(@RequestBody Course course) {
+        return courseService.addNewCourse(course);
     }
 
     @DeleteMapping(path= "{courseId}")
@@ -38,14 +39,13 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}/student/{studentId}")
-    public void enrollStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
-        courseService.enrollStudentToCourse(courseId, studentId);
-
+    public Course enrollStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
+        return courseService.enrollStudentToCourse(courseId, studentId);
     }
 
     @PutMapping("/{courseId}/teacher/{teacherId}")
-    public void assignTeacherToCourse(@PathVariable Integer courseId, @PathVariable Integer teacherId) {
-        courseService.assignTeacherToCourse(courseId, teacherId);
+    public Course assignTeacherToCourse(@PathVariable Integer courseId, @PathVariable Integer teacherId) {
+        return courseService.assignTeacherToCourse(courseId, teacherId);
     }
 
 }

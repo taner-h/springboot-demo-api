@@ -30,11 +30,12 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public void addNewCourse(Course course) {
+    public Course addNewCourse(Course course) {
         Optional<Course> courseCode = courseRepository.findCourseByCode(course.getCode());
     if (courseCode.isPresent())
         throw new IllegalStateException("A course with the given code already exists.");
     courseRepository.save(course);
+    return course;
     }
 
     public void deleteCourse(Integer id) {
@@ -53,25 +54,25 @@ public class CourseService {
     }
 
 
-    public void enrollStudentToCourse(Integer courseId, Integer studentId) {
+    public Course enrollStudentToCourse(Integer courseId, Integer studentId) {
         Course course = courseRepository.findCourseById(courseId)
                 .orElseThrow(() -> new IllegalStateException("no course found with given id (" + courseId + ")"));
         Student student = studentRepository.findStudentById(studentId)
                 .orElseThrow(() -> new IllegalStateException("no student found with given id (" + studentId + ")"));
         course.enrollStudent(student);
         courseRepository.save(course);
+        return course;
 
         }
 
-
-    public void assignTeacherToCourse(Integer courseId, Integer teacherId) {
+    public Course assignTeacherToCourse(Integer courseId, Integer teacherId) {
         Course course = courseRepository.findCourseById(courseId)
                 .orElseThrow(() -> new IllegalStateException("no course found with given id (" + courseId + ")"));
         Teacher teacher = teacherRepository.findTeacherById(teacherId)
                 .orElseThrow(() -> new IllegalStateException("no teacher found with given id (" + teacherId + ")"));
         course.assignTeacher(teacher);
         courseRepository.save(course);
-
+        return course;
     }
 }
 

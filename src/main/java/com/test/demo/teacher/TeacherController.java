@@ -30,8 +30,8 @@ public class TeacherController {
     }
 
     @PostMapping
-    public void addNewTeacher(@RequestBody Teacher teacher) {
-        teacherService.addNewTeacher(teacher);
+    public Teacher addNewTeacher(@RequestBody Teacher teacher) {
+        return teacherService.addNewTeacher(teacher);
     }
 
     @DeleteMapping(path= "{teacherId}")

@@ -29,8 +29,8 @@ public class StudentController {
 
 
     @PostMapping
-    public void addNewStudent(@RequestBody Student student) {
-        studentService.addNewStudent(student);
+    public Student addNewStudent(@RequestBody Student student) {
+        return studentService.addNewStudent(student);
     }
 
     @DeleteMapping(path = "{studentID}")
@@ -40,13 +40,13 @@ public class StudentController {
     }
 
     @PutMapping(path = "{studentID}")
-    public void updateStudent(
+    public Student updateStudent(
             @PathVariable("studentID") Integer id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email
             ) {
 
-        studentService.updateStudent(id, name, email);
+        return studentService.updateStudent(id, name, email);
     }
 
 

@@ -29,11 +29,12 @@ public class TeacherService {
         return teacher;
     }
 
-    public void addNewTeacher(Teacher teacher) {
+    public Teacher addNewTeacher(Teacher teacher) {
         Optional<Teacher> teacherId = teacherRepository.findTeacherById(teacher.getId());
         if (teacherId.isPresent())
             throw new IllegalStateException("A teacher with the given id already exists.");
         teacherRepository.save(teacher);
+        return teacher;
     }
 
     public void deleteTeacher(Integer id) {

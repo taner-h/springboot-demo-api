@@ -21,11 +21,12 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public void addNewStudent(Student student) {
+    public Student addNewStudent(Student student) {
         Optional<Student> studentEmail = studentRepository.findStudentByEmail(student.getEmail());
         if (studentEmail.isPresent())
             throw new IllegalStateException("e-mail already taken.");
         studentRepository.save(student);
+        return student;
     }
 
     public void deleteStudent(Integer id) {
@@ -39,12 +40,13 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudent(Integer id, String name, String email) {
+    public Student updateStudent(Integer id, String name, String email) {
         Student student = studentRepository.findStudentById(id)
                 .orElseThrow(() -> new IllegalStateException("no student found with given id (" + id + ")"));
 
         if (name != null)  student.setName(name);
         if (email != null)  student.setEmail(email);
+        return student;
     }
 
     public Optional<Student> getStudentById(Integer id) {
